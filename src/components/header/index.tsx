@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import profileIcon from "../../images/profileIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
 import { useState } from "react";
+import SearchBar from "../Search-bar/SearchBar";
 
 function Header() {
   const [searchStatus, setSearchStatus] = useState(false);
@@ -16,6 +17,7 @@ function Header() {
       <nav>
           <button onClick={ () => navigate("/profile") }> <img src={ profileIcon } alt="Profile buton" /> </button>
           <button  onClick={ () => setSearchStatus(!searchStatus) }> <img src={ searchIcon } alt="Search buton" /> </button>
+          { searchStatus && <SearchBar />}
       </nav>
     </header>
   );
