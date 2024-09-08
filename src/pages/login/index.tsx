@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { INITIAL_FORMS, Forms_Login } from '../../utils/types'
-import styles from './Login.module.css'
+// import styles from './Login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 
 
@@ -17,7 +17,7 @@ function Login() {
     })}
 
     function handleSubmit() {
-      navigate('/home-page')
+      navigate('/meals')
     }
 
   return (
