@@ -31,7 +31,16 @@ export type drinkRecipe = {
 }
 
 export type Recipe = {
-  id: drinkRecipe | mealRecipe['idMeal'],
+  id: drinkRecipe['idDrink'] | mealRecipe['idMeal'],
   name: mealRecipe['strMeal'] | drinkRecipe['strDrink'],
   img: mealRecipe['strMealThumb'] | drinkRecipe['strDrinkThumb'],
+}
+
+export type CategoryObject = {
+  strCategory: string
+};
+
+export type RecipesContextType = {
+  recipes: mealRecipe[] | drinkRecipe[],
+  setRecipes: React.Dispatch<React.SetStateAction<mealRecipe[] | drinkRecipe[]>>
 }
