@@ -7,24 +7,14 @@ function SearchBar() {
   const [formFilter, setFormFilter] = useState(INITIAL_FORMS_SEARCH)
   const { pathname } =  useLocation()
 
-  const location = pathname.split("/")[1] === "meals" ? "meals" : "drinks"
-
-  console.log(location);
-  
-
+  const location = pathname.split("/")[1] === "meals" ? "meal" : "cocktail"
 
   const url = {
-    drinks: {
-      ingredient: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${formFilter.search}`,
-      name: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${formFilter.search}`,
-      first_letter: `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${formFilter.search}`,
-    },
-    meals: {
-      ingredient: `https://www.themealdb.com/api/json/v1/1/filter.php?i=${formFilter.search}`,
-      name: `https://www.themealdb.com/api/json/v1/1/search.php?s=${formFilter.search}`,
-      first_letter: `https://www.themealdb.com/api/json/v1/1/search.php?f=${formFilter.search}`,
-    }
+    ingredient: `https://www.the${location}db.com/api/json/v1/1/filter.php?i=${formFilter.search}`,
+    name: `https://www.the${location}db.com/api/json/v1/1/search.php?s=${formFilter.search}`,
+    first_letter: `https://www.the${location}db.com/api/json/v1/1/search.php?f=${formFilter.search}`,
   }
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value} = e.target
@@ -36,7 +26,7 @@ function SearchBar() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement|HTMLButtonElement>) => {
     e.preventDefault()
-    const data = await allFetch(url[location][formFilter.filter])
+    const data = await allFetch(url[formFilter.filter])
     console.log(data)
   }
 

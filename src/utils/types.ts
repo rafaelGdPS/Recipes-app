@@ -22,18 +22,20 @@ export type mealRecipe = {
   idMeal: string,
   strMeal: string,
   strMealThumb: string,
+  strCategory: string,
 }
 
 export type drinkRecipe = {
   idDrink: string,
   strDrink: string,
   strDrinkThumb: string,
+  strCategory: string,
 }
 
 export type Recipe = {
-  id: drinkRecipe['idDrink'] | mealRecipe['idMeal'],
-  name: mealRecipe['strMeal'] | drinkRecipe['strDrink'],
-  img: mealRecipe['strMealThumb'] | drinkRecipe['strDrinkThumb'],
+  id: string
+  name: string
+  img: string
 }
 
 export type CategoryObject = {
@@ -42,5 +44,7 @@ export type CategoryObject = {
 
 export type RecipesContextType = {
   recipes: mealRecipe[] | drinkRecipe[],
-  setRecipes: React.Dispatch<React.SetStateAction<mealRecipe[] | drinkRecipe[]>>
+  setRecipes: React.Dispatch<React.SetStateAction<mealRecipe[] | drinkRecipe[]>>,
+  allRecipes: mealRecipe[] | drinkRecipe[],
+  setAllRecipes: React.Dispatch<React.SetStateAction<mealRecipe[] | drinkRecipe[]>>,
 }

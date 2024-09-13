@@ -7,11 +7,13 @@ type RecipesProverProps = {
 }
 
 function RecipesProvider({ children }: RecipesProverProps) {
-  const [recipes, setRecipes] = useState<mealRecipe[] | drinkRecipe[]>([]);
-
+  const [allRecipes, setAllRecipes] = useState<mealRecipe[] | drinkRecipe[]>([]);
+  const [recipes, setRecipes] = useState<mealRecipe[] | drinkRecipe[]>(allRecipes);
   const context = {
     recipes,
     setRecipes,
+    allRecipes,
+    setAllRecipes,
   }
 
   return (

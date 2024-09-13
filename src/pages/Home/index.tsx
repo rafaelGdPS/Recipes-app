@@ -9,7 +9,7 @@ const meal = "meal"
 const drink = "cocktail"
 
 function Home() {
-  const { recipes, setRecipes } = useContext(RecipesContext)
+  const { recipes, setAllRecipes, setRecipes } = useContext(RecipesContext)
   const [categories, setCategories] = useState<CategoryObject[]>([])
   const { pathname } = useLocation()
   const recipe = pathname.split("/")[1] === "meals" ? meal : drink
@@ -20,6 +20,7 @@ function Home() {
     async function fetchRecipes() {
       const response = await allFetch(url)
       const data = response.meals || response.drinks
+      setAllRecipes(data.slice(0, 12))
       setRecipes(data.slice(0, 12))
                  
     }
@@ -32,7 +33,7 @@ function Home() {
 
     fetchCategories()
     fetchRecipes()
-  }, [recipe])
+  }, [recipe, url])
 
   return (
     <div>
