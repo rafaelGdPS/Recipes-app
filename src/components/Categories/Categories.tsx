@@ -17,6 +17,7 @@ function Categories({ categories }: CategoriesProps) {
 
     if (category === "Todas" || category === prevCategory) {
       setRecipes(allRecipes)
+      setPrevCategory("");
       return;
     }
     setPrevCategory(category ?? "");
