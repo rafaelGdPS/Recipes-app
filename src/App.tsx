@@ -4,6 +4,7 @@ import Register from "./pages/register"
 import Home from "./pages/Home"
 import Layout from "./components/Layout"
 import Profile from "./pages/Profile"
+import RecipeDetails from "./pages/RecipeDetails"
 
 function App() {
 
@@ -13,10 +14,12 @@ function App() {
       <Route path="/" element={ <Login /> }/>
       <Route path="/register" element={ <Register /> }/>
       <Route path="/" element={ <Layout /> }>
-      <Route path="meals" element={ <Home /> }/>
-      <Route path="drinks" element={ <Home /> }/>
-      <Route path="profile" element={ <Profile /> }/>
+       <Route path="meals" element={ <Home /> }/>
+       <Route path="drinks" element={ <Home /> }/>
+       <Route path="profile" element={ <Profile /> }/>
       </Route>
+      <Route path="/meals/:recipeId" element={ <RecipeDetails /> }/>
+      <Route path="/drinks/:recipeId" element={ <RecipeDetails /> }/>
     </Routes>
     
   )
