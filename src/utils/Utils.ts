@@ -10,10 +10,25 @@ export const allFetch = async (url: string) => {
   }
 };
 
+const filterkeys = (recipe: mealRecipe | drinkRecipe, keyObject: string) => {
+  const keys = Object.entries(recipe).filter((r) => {
+    const [key, value] = r;
+    return key.includes(keyObject) && value;
+  })
+  return keys.map((r) => r[1]);
+};
+
 export const managerRecipes = (recipe: mealRecipe | drinkRecipe) : Recipe => {
+
+  const ingredients = filterkeys(recipe, 'strIngredient');
+  const measures = filterkeys(recipe, 'strMeasure');
   return {
     id: 'idMeal' in recipe ? recipe.idMeal : recipe.idDrink,
     name: 'strMeal' in recipe ? recipe.strMeal : recipe.strDrink,
     img: 'strMeal' in recipe ? recipe.strMealThumb : recipe.strDrinkThumb,
+    category: recipe.strCategory,
+    ingredients: ingredients,
+    instructions: recipe.strInstructions,
+    measures,
   }
 }

@@ -23,6 +23,7 @@ export type mealRecipe = {
   strMeal: string,
   strMealThumb: string,
   strCategory: string,
+  strInstructions: string,
 }
 
 export type drinkRecipe = {
@@ -30,12 +31,17 @@ export type drinkRecipe = {
   strDrink: string,
   strDrinkThumb: string,
   strCategory: string,
+  strInstructions: string,
 }
 
 export type Recipe = {
-  id: string
-  name: string
-  img: string
+  id: string,
+  name: string,
+  img: string,
+  category: string,
+  ingredients: string[],
+  instructions: string,
+  measures: string[],
 }
 
 export type CategoryObject = {
