@@ -22,6 +22,7 @@ export const managerRecipes = (recipe: mealRecipe | drinkRecipe) : Recipe => {
 
   const ingredients = filterkeys(recipe, 'strIngredient');
   const measures = filterkeys(recipe, 'strMeasure');
+
   return {
     id: 'idMeal' in recipe ? recipe.idMeal : recipe.idDrink,
     name: 'strMeal' in recipe ? recipe.strMeal : recipe.strDrink,
@@ -30,5 +31,15 @@ export const managerRecipes = (recipe: mealRecipe | drinkRecipe) : Recipe => {
     ingredients: ingredients,
     instructions: recipe.strInstructions,
     measures,
+    youtube: 'idMeal' in recipe ? recipe.strYoutube : "",
   }
+}
+
+export const managerListRecipes = (recipes: mealRecipe[] | drinkRecipe[]) => {
+  return recipes.map((recipe) => managerRecipes(recipe));
+}
+
+export const managerLocation = () => {
+  const { pathname } = window.location
+  return pathname.split("/")[1] === "meals" ? "meals" : "drink";
 }

@@ -24,6 +24,7 @@ export type mealRecipe = {
   strMealThumb: string,
   strCategory: string,
   strInstructions: string,
+  strYoutube: string,
 }
 
 export type drinkRecipe = {
@@ -42,6 +43,7 @@ export type Recipe = {
   ingredients: string[],
   instructions: string,
   measures: string[],
+  youtube: string,
 }
 
 export type CategoryObject = {
