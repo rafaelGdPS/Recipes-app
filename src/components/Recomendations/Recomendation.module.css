@@ -1,0 +1,9 @@
+.scrool-image {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.scrool-no-image {
+  display: none;
+}
