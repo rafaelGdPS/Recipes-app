@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import RecipesContext from "../../context/RecipesContext";
 import { useContext, useEffect} from "react";
 import { managerLocation, managerRecipes } from "../../utils/Utils";
@@ -6,22 +6,23 @@ import Recomendations from "../../components/Recomendations";
 
 function RecipeDetails() {
   const params = useParams();
-  const { recipes } = useContext(RecipesContext);
+  const navigate = useNavigate()
+  const { recipes, setRecipeDetails } = useContext(RecipesContext);
   
   const location = managerLocation()
 
-  console.log(recipes);
-  
-  
   const currentRecipe = recipes.find((recipe) => managerRecipes(recipe).id === params.recipeId);
-  console.log(currentRecipe);
 
   if (!currentRecipe) {
     return <h1>Receita não  encontrada</h1>
   }
 
   const recipe = managerRecipes(currentRecipe)
-  console.log(recipe);
+ 
+  const handleclick = () => {
+    setRecipeDetails(recipe)
+    navigate(window.location.pathname + '/in-progress')
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,7 +48,7 @@ function RecipeDetails() {
       width="100%"
       />
       <Recomendations />
-      
+      <button onClick={handleclick} >Começar</button>
     </div>
   )
 }
