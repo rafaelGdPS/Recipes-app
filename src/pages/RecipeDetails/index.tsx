@@ -48,7 +48,7 @@ function RecipeDetails() {
       width="100%"
       />
       <Recomendations />
-      <button onClick={handleclick} >Começar</button>
+      <button onClick={handleclick} >Começar Receita</button>
     </div>
   )
 }
