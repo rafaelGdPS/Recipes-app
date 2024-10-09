@@ -45,6 +45,16 @@ export type Recipe = {
   measures: string[],
   youtube: string,
 }
+export const RECIPE_INITIAL = {
+  id: '',
+  name: '',
+  img: '',
+  category: '',
+  ingredients: [],
+  instructions: '',
+  measures: [],
+  youtube: '',
+}
 
 export type CategoryObject = {
   strCategory: string
@@ -55,6 +65,6 @@ export type RecipesContextType = {
   setRecipes: React.Dispatch<React.SetStateAction<mealRecipe[] | drinkRecipe[]>>,
   allRecipes: mealRecipe[] | drinkRecipe[],
   setAllRecipes: React.Dispatch<React.SetStateAction<mealRecipe[] | drinkRecipe[]>>,
-  recipeDetails: Recipe | undefined,
-  setRecipeDetails: React.Dispatch<React.SetStateAction<Recipe | undefined>>,
+  recipeDetails: Recipe,
+  setRecipeDetails: React.Dispatch<React.SetStateAction<Recipe>>,
 }

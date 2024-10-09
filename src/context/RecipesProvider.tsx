@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { drinkRecipe, mealRecipe, Recipe } from "../utils/types";
+import { drinkRecipe, mealRecipe, Recipe, RECIPE_INITIAL } from "../utils/types";
 import RecipesContext from "./RecipesContext";
 
 type RecipesProverProps = {
@@ -9,7 +9,7 @@ type RecipesProverProps = {
 function RecipesProvider({ children }: RecipesProverProps) {
   const [allRecipes, setAllRecipes] = useState<mealRecipe[] | drinkRecipe[]>([]);
   const [recipes, setRecipes] = useState<mealRecipe[] | drinkRecipe[]>(allRecipes);
-  const [recipeDetails, setRecipeDetails] = useState<Recipe>();
+  const [recipeDetails, setRecipeDetails] = useState<Recipe>(RECIPE_INITIAL);
   const context = {
     recipes,
     setRecipes,

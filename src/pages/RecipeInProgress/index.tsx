@@ -3,18 +3,18 @@ import RecipesContext from "../../context/RecipesContext";
 import whiteHeart from  "../../images/whiteHeartIcon.svg"
 import blackHeart from  "../../images/blackHeartIcon.svg"
 import shareIcon from  "../../images/shareIcon.svg"
+import { removeStorage, setStorage } from "../../utils/LocalStorage";
 
 type Checked = {
   [key: string]: boolean
 }
-const INITIAL_CHECKED: Checked = {
-  ingredient: false
-}
 
 function RecipeInProgress() {
   const [favoriteHeart, setFavoriteHeart] = useState(whiteHeart);
-  const [isChecked, setIsChecked] = useState<Checked>(INITIAL_CHECKED);
+  const [isChecked, setIsChecked] = useState<Checked>(Object);
+  const [isFinished, setIsFinished] = useState(false);
   const {recipeDetails} = useContext(RecipesContext);
+
 
   const handleFavorite = () => {
     favoriteHeart === whiteHeart ? setFavoriteHeart(blackHeart) : setFavoriteHeart(whiteHeart);
@@ -25,6 +25,15 @@ function RecipeInProgress() {
       ...isChecked,
       [name]: checked
     });
+  }
+  const handleFinish = () => {
+    if (isFinished === false) {
+      setStorage('doneRecipes', recipeDetails)
+      setIsFinished(true)
+    } else {
+      removeStorage('doneRecipes', recipeDetails)
+      setIsFinished(false)
+    }
   }
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -50,7 +59,7 @@ function RecipeInProgress() {
           </label>
         </div>
       ))}
-      <button>Finalizar receita</button>
+      <button  onClick={ handleFinish }>Finalizar receita</button>
       <button onClick={ handleFavorite }><img src={ favoriteHeart } alt="Botão de favorito" /></button>
       <button  onClick={ handleShare }><img src={shareIcon} alt="" /></button>
     </div>
