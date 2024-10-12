@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RecipesContext from "../../context/RecipesContext";
 import whiteHeart from  "../../images/whiteHeartIcon.svg"
 import blackHeart from  "../../images/blackHeartIcon.svg"
 import shareIcon from  "../../images/shareIcon.svg"
-import { removeStorage, setStorage } from "../../utils/LocalStorage";
+import {removeStorage, setStorage } from "../../utils/LocalStorage";
 
-type Checked = {
+export type Checked = {
   [key: string]: boolean
 }
 
@@ -21,11 +21,12 @@ function RecipeInProgress() {
   }
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, name } = e.target;
-    setIsChecked({
-      ...isChecked,
-      [name]: checked
-    });
+    const newChecked = { ...isChecked, [name]: checked }
+    setIsChecked(newChecked);
+    // setStorage('inProgressRecipes', newChecked)
+    
   }
+  setStorage('inProgressRecipes', isChecked)
   const handleFinish = () => {
     if (isFinished === false) {
       setStorage('doneRecipes', recipeDetails)
@@ -39,6 +40,12 @@ function RecipeInProgress() {
     navigator.clipboard.writeText(window.location.href)
     alert('Link copiado!')
   }
+
+  useEffect(() => {
+    console.log("Atualizando localStorage com:", isChecked);
+    setStorage('inProgressRecipes', isChecked)
+
+  }, [isChecked])
   return (
     <div>
       <h1>Receita de { recipeDetails?.name }</h1>

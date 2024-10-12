@@ -2,7 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import RecipesContext from "../../context/RecipesContext";
 import { useContext, useEffect} from "react";
 import { managerLocation, managerRecipes } from "../../utils/Utils";
-import Recomendations from "../../components/Recomendations";
+import { getStorage } from "../../utils/LocalStorage";
+// import Recomendations from "../../components/Recomendations";
 
 function RecipeDetails() {
   const params = useParams();
@@ -24,6 +25,9 @@ function RecipeDetails() {
     navigate(window.location.pathname + '/in-progress')
   }
 
+  const storageData = getStorage('doneRecipes')
+  const verifyDoneRecipes = storageData.some((item) => item.id === recipe.id)
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location])
@@ -48,7 +52,8 @@ function RecipeDetails() {
       width="100%"
       />
       {/* <Recomendations /> */}
-      <button onClick={handleclick} >Começar Receita</button>
+      
+      { verifyDoneRecipes === false && <button onClick={handleclick} >Começar Receita</button>}
     </div>
   )
 }
