@@ -1,11 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import RecipesContext from "../../context/RecipesContext";
-import { useContext, useEffect} from "react";
+import { useContext, useEffect, useState} from "react";
 import { managerLocation, managerRecipes } from "../../utils/Utils";
 import { getStorage } from "../../utils/LocalStorage";
+
 // import Recomendations from "../../components/Recomendations";
 
 function RecipeDetails() {
+  const [inProgress, setInProgress] = useState<string>("");
   const params = useParams();
   const navigate = useNavigate()
   const { recipes, setRecipeDetails } = useContext(RecipesContext);
@@ -30,6 +32,20 @@ function RecipeDetails() {
   
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const getLocalStorage = () => {
+      const dataStorage = getStorage('inProgressRecipes')
+      if (dataStorage.length === 0) return;
+
+      const data = dataStorage.find((item) => item.id === recipe.name)
+
+      if (data) {
+        const verifyData = Object.values(data.ingredients).some((item) => item === true)
+        
+        if (verifyData) setInProgress(data.id)
+      }
+    }
+    getLocalStorage()
   }, [location])
 
   
@@ -53,7 +69,7 @@ function RecipeDetails() {
       />
       {/* <Recomendations /> */}
       
-      { verifyDoneRecipes === false && <button onClick={handleclick} >Começar Receita</button>}
+      { verifyDoneRecipes === false && <button onClick={handleclick} >{inProgress !== "" ? "Continuar receita" : "Começar Receita"}</button>}
     </div>
   )
 }

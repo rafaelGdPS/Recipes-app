@@ -3,15 +3,23 @@ import RecipesContext from "../../context/RecipesContext";
 import whiteHeart from  "../../images/whiteHeartIcon.svg"
 import blackHeart from  "../../images/blackHeartIcon.svg"
 import shareIcon from  "../../images/shareIcon.svg"
-import {removeStorage, setStorage } from "../../utils/LocalStorage";
+import {getStorage, removeStorage, setStorage } from "../../utils/LocalStorage";
+import { Recipe } from "../../utils/types";
 
-export type Checked = {
+type Checked = {
   [key: string]: boolean
 }
 
+export type RecipesInProgress = {
+  id: string,
+  ingredients: Checked
+}
+
+
 function RecipeInProgress() {
   const [favoriteHeart, setFavoriteHeart] = useState(whiteHeart);
-  const [isChecked, setIsChecked] = useState<Checked>(Object);
+  const [recipeInProgress, setRecipeInProgress] = useState<Checked>({});
+  const [isChecked, setIsChecked] = useState<Checked>(recipeInProgress);
   const [isFinished, setIsFinished] = useState(false);
   const {recipeDetails} = useContext(RecipesContext);
 
@@ -19,15 +27,21 @@ function RecipeInProgress() {
   const handleFavorite = () => {
     favoriteHeart === whiteHeart ? setFavoriteHeart(blackHeart) : setFavoriteHeart(whiteHeart);
   }
+
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked, name } = e.target;
-    const newChecked = { ...isChecked, [name]: checked }
-    setIsChecked(newChecked);
-    // setStorage('inProgressRecipes', newChecked)
+    const { checked, name} = e.target;
+
+    const newChecked = {...isChecked, [name]: checked}
+
+    const ingredientsObject = { 
+      id: recipeDetails.name, 
+      ingredients: newChecked, 
+    }
     
+    setIsChecked(newChecked);
+    setStorage('inProgressRecipes', ingredientsObject)
   }
-  setStorage('inProgressRecipes', isChecked)
-  const handleFinish = () => {
+   const handleFinish = () => {
     if (isFinished === false) {
       setStorage('doneRecipes', recipeDetails)
       setIsFinished(true)
@@ -42,10 +56,17 @@ function RecipeInProgress() {
   }
 
   useEffect(() => {
-    console.log("Atualizando localStorage com:", isChecked);
-    setStorage('inProgressRecipes', isChecked)
-
-  }, [isChecked])
+    const getlocalStorage = () => {     
+      const ingredientsDone = getStorage('inProgressRecipes')
+      if (ingredientsDone.length === 0) return;
+      const ingredients = ingredientsDone.find((item: RecipesInProgress | Recipe) => item.id === recipeDetails.name)
+      if (ingredients) {
+        setRecipeInProgress(ingredients.ingredients as Checked)
+        setIsChecked(ingredients.ingredients as Checked)
+      }
+   }
+  getlocalStorage()
+  }, [])
   return (
     <div>
       <h1>Receita de { recipeDetails?.name }</h1>
@@ -60,7 +81,8 @@ function RecipeInProgress() {
             type="checkbox" 
             name={ `${ingredient} - ${recipeDetails?.measures[index]}` } 
             id={ ingredient }
-            checked={isChecked[ingredient]}
+
+            checked={isChecked[`${ingredient} - ${recipeDetails?.measures[index]}`]}
             onChange={handleCheck} 
             />
           </label>

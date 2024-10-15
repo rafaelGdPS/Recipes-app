@@ -1,29 +1,60 @@
-import { Checked } from "../pages/RecipeInProgress";
+import { RecipesInProgress } from "../pages/RecipeInProgress";
 import { Recipe } from "./types";
 
-export const getStorage = (key: string): Recipe[] => {
+export const getStorage = (key: string): Recipe[] | RecipesInProgress[] => {
   const data = localStorage.getItem(key);
   return data ? JSON.parse(data) : [];
 };
 
-export const setStorage = (key: string, value: Recipe | Checked) => {
-  const data = getStorage(key);
+export const removeStorage = (key: string, value: Recipe | RecipesInProgress) => {
+  const data = getStorage(key)
   if (Object.keys(value).includes('id')) {
-    const veryfy = data.some((item: Recipe | Checked ) => item.id === value.id);
+    const newData = data.filter((item: Recipe | RecipesInProgress) => item.id != value.id)
+    
+    localStorage.setItem(key, JSON.stringify(newData))
+  }
+  
+}
+
+const inProgresseStorage = (value: Recipe | RecipesInProgress) => {
+  const dataStorage = getStorage('inProgressRecipes');
+
+  
+  if (dataStorage.length === 0) {
+    return [...dataStorage, value]
+  }
+
+  const veryfyObject = dataStorage.some((item: Recipe | RecipesInProgress) => item.id === value.id)
+
+  if (veryfyObject === false) {
+    return [...dataStorage, value]
+  }
+    const newDataStorage = dataStorage.map((item: Recipe | RecipesInProgress) => {
+      console.log(item.id);
+      console.log(value.id);
+      
+      if (item.id === value.id) {
+
+        return value
+      }
+      return item
+    })
+    return newDataStorage
+
+}
+
+export const setStorage = (key: string, value: Recipe | RecipesInProgress) => {
+  const data = getStorage(key);
+  if (Object.keys(value).includes('name')) {
+    const veryfy = data.some((item: Recipe | RecipesInProgress ) => item.id === value.id);
     if (veryfy === true) return;
     
     localStorage.setItem(key, JSON.stringify([...data, value]));
   }
-  localStorage.setItem(key, JSON.stringify([value]));
+   
+  localStorage.setItem(key, JSON.stringify(inProgresseStorage(value)));
   
 
   
 }
 
-export const removeStorage = (key: string, value: Recipe) => {
-  const data = getStorage(key)
-  
-  const newData = data.filter((item: Recipe) => item.id != value.id)
-  
-  localStorage.setItem(key, JSON.stringify(newData))
-}
