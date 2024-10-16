@@ -45,11 +45,18 @@ const inProgresseStorage = (value: Recipe | RecipesInProgress) => {
 
 export const setStorage = (key: string, value: Recipe | RecipesInProgress) => {
   const data = getStorage(key);
+  console.log(data);
+  
   if (Object.keys(value).includes('name')) {
     const veryfy = data.some((item: Recipe | RecipesInProgress ) => item.id === value.id);
-    if (veryfy === true) return;
+    console.log(veryfy);
     
-    localStorage.setItem(key, JSON.stringify([...data, value]));
+    if (veryfy === true) return;
+    const newData = [...data, value];
+    console.log(newData);
+    
+    localStorage.setItem(key, JSON.stringify(newData));
+    return;
   }
    
   localStorage.setItem(key, JSON.stringify(inProgresseStorage(value)));
