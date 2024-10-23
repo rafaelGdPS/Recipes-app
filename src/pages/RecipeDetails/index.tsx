@@ -21,6 +21,9 @@ function RecipeDetails() {
   }
 
   const recipe = managerRecipes(currentRecipe)
+
+  console.log(recipe);
+  
  
   const handleclick = () => {
     setRecipeDetails(recipe)
@@ -61,8 +64,9 @@ function RecipeDetails() {
         )) }
       </ul>
       <p>{ recipe.instructions }</p>
+
       <iframe 
-      src={ recipe.youtube.replace('watch?v=', 'embed/') }
+      src={ recipe.youtube && recipe.youtube.replace('watch?v=', 'embed/') }
       title={ recipe.name }
       height="300px"
       width="100%"

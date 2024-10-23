@@ -67,9 +67,12 @@ function RecipeInProgress() {
 
   const handleDisable =  () => {
     const allIngredients = recipeDetails.ingredients.length;
+    
     const checkedIngredients = Object.values(isChecked).filter((item) => item === true).length;
-    return allIngredients === checkedIngredients ? false : true;
+
+    return allIngredients !== checkedIngredients 
   }
+  
 
   useEffect(() => {
     const getlocalStorage = () => {     

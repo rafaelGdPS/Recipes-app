@@ -4,7 +4,6 @@ import { allFetch } from "../../utils/Utils"
 import { CategoryObject } from "../../utils/types"
 import Categories from "../../components/Categories/Categories"
 import RecipesContext from "../../context/RecipesContext"
-import Recomentations from "../../components/Recomendations"
 
 const meal = "meal"
 const drink = "cocktail"
@@ -13,14 +12,17 @@ function Home() {
   const { recipes, setAllRecipes, setRecipes } = useContext(RecipesContext)
   const [categories, setCategories] = useState<CategoryObject[]>([])
   const { pathname } = useLocation()
+
   const recipe = pathname.split("/")[1] === "meals" ? meal : drink
   const url = `https://www.the${recipe}db.com/api/json/v1/1/search.php?s=`
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchRecipes() {
       const response = await allFetch(url)
       const data = response.meals || response.drinks
+      
       setAllRecipes(data.slice(0, 12))
       setRecipes(data.slice(0, 12))
                  
