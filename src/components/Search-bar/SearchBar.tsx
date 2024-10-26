@@ -32,39 +32,53 @@ function SearchBar() {
 
   return (
     <div>
-      <form action="">
-      <input 
+      <form className="flex flex-col items-center" action="">
+        <div>
+
+      <input
+      className="border-2 border-black rounded-lg" 
       type="text" 
       placeholder="Search..." 
       name="search" 
       value={ formFilter.search }  
       onChange={ handleChange }
       />
-      <input 
-      type="radio" 
-      name="filter" 
-      id="ingredient" 
-      value="ingredient" 
-      onChange={ handleChange }
-      />
-      <label htmlFor="ingredient">Ingrediente</label>
-      <input 
-      type="radio" 
-      name="filter" 
-      id="name" 
-      value="name" 
-      onChange={ handleChange }
-      />
-      <label htmlFor="name">Nome</label>
-      <input 
-      type="radio" 
-      name="filter" 
-      id="first-letter" 
-      value="first_letter" 
-      onChange={ handleChange }
-      />
-      <label htmlFor="first-letter">Primeira letra</label>
-      <button type="submit" onClick={ handleSubmit }>Search</button>
+      </div>
+      <div className="flex my-3 w-2/4 justify-around items-center">
+
+      <label className=" flex " htmlFor="ingredient">
+        <input 
+        type="radio" 
+        name="filter" 
+        id="ingredient" 
+        value="ingredient" 
+        onChange={ handleChange }
+        />
+        Ingrediente
+        </label>
+
+        <label className=" flex" htmlFor="name">
+        <input 
+        type="radio" 
+        name="filter" 
+        id="name" 
+        value="name" 
+        onChange={ handleChange }
+        />
+          Nome
+          </label>
+        <label className=" flex" htmlFor="first-letter">
+        <input 
+        type="radio" 
+        name="filter" 
+        id="first-letter" 
+        value="first_letter" 
+        onChange={ handleChange }
+        />
+            Primeira letra
+        </label>
+        </div>
+          <button  className="mb-4" type="submit" onClick={ handleSubmit }>Search</button>
       </form>
     </div>
   )

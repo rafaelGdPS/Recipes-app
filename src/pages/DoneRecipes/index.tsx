@@ -21,12 +21,14 @@ function DoneRecipes() {
     <div>
       <h1>Receitas feitas</h1>
       <Navigate />
+      <div className="flex flex-wrap">
       {doneRecipes.map((recipe) => (
-        <div key={recipe.id}>
+        <div  key={recipe.id}>
           <RecipeCard recipe={recipe} />
           <button onClick={ () => handleClick(recipe) } >Desfazer</button>
         </div>
       ))}
+      </div>
     </div>
   )
 }

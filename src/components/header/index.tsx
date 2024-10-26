@@ -11,11 +11,11 @@ function Header() {
   const title = pathname.substring(1).replace(/^\w/, (c) => c.toUpperCase());
   
   return (
-    <header>
+    <header className="flex flex-col text-center content-center ">
       <h1>{ title.split("-")[0] }</h1>
-      <nav>
+      <nav className="flex flex-col text-center">
           <Navigate />
-          <button  onClick={ () => setSearchStatus(!searchStatus) }> <img src={ searchIcon } alt="Search buton" /> </button>
+          <button className=" self-center my-4" onClick={ () => setSearchStatus(!searchStatus) }> <img src={ searchIcon } alt="Search buton" /> </button>
           { searchStatus && <SearchBar />}
       </nav>
     </header>

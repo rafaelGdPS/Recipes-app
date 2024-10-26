@@ -30,13 +30,13 @@ function Categories({ categories }: CategoriesProps) {
   }
 
   return (
-    <nav>
+    <nav className="flex  justify-center">
     {categories.map((category) => (
-      <button onClick={ handleClick } key={ category.strCategory }>
+      <button className="mx-2" onClick={ handleClick } key={ category.strCategory }>
         {category.strCategory}
       </button>
     ))}
-    <button onClick={ handleClick }>Todas</button>
+    <button className="mx-2" onClick={ handleClick }>Todas</button>
   </nav>
   );
 }

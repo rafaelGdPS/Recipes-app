@@ -6,7 +6,7 @@ function Footer() {
   const navigate = useNavigate()
   return (
     <footer>
-      <nav>
+      <nav className='flex justify-evenly'>
         <button onClick={ () => navigate("/meals") }><img src={ mealIcon } alt="" /></button>
         <button onClick={ () => navigate("/drinks") }><img src={ drinkIcon } alt="" /></button>
       </nav>

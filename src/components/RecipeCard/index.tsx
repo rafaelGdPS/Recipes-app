@@ -7,7 +7,7 @@ type RecipeCardProps = {
 function RecipeCard({ recipe }: RecipeCardProps) {
 
   return (
-    <button>
+    <button className="grid ">
       <h2>{recipe.name}</h2>
       <h4>{recipe.category}</h4>
       <img src={recipe.img} alt={ recipe.name } />

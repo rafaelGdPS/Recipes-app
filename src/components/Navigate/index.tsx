@@ -3,9 +3,9 @@ import profileIcon from "../../images/profileIcon.svg";
 
 function Navigate() {
   return (
-    <nav>
+    <nav className=" flex justify-around mt-3">
       <Link to='/meals'>Home</Link>
-      <Link to='/dones-recipes'>Receitas Feitas</Link>
+      <Link to='/done-recipes'>Receitas Feitas</Link>
       <Link to='/profile'><img src={ profileIcon } alt="Profile buton" /></Link>
       
     </nav>
