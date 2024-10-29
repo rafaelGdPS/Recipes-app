@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import RecipesContext from "../../context/RecipesContext";
 import { useContext, useEffect, useState} from "react";
-import { managerLocation, managerRecipes } from "../../utils/Utils";
+import { allFetch, managerLocation, managerRecipes } from "../../utils/Utils";
 import { getStorage } from "../../utils/LocalStorage";
 
 // import Recomendations from "../../components/Recomendations";
@@ -10,21 +10,13 @@ function RecipeDetails() {
   const [inProgress, setInProgress] = useState<string>("");
   const params = useParams();
   const navigate = useNavigate()
-  const { recipes, setRecipeDetails } = useContext(RecipesContext);
+  const { setRecipeDetails, recipeDetails } = useContext(RecipesContext);
   
   const location = managerLocation()
-
-  const currentRecipe = recipes.find((recipe) => managerRecipes(recipe).id === params.recipeId);
-
-  if (!currentRecipe) {
-    return <h1>Receita não  encontrada</h1>
-  }
-
-  const recipe = managerRecipes(currentRecipe)
-
-  console.log(recipe);
+  console.log(recipeDetails);
   
- 
+  const recipe = recipeDetails
+   
   const handleclick = () => {
     setRecipeDetails(recipe)
     navigate(window.location.pathname + '/in-progress')
@@ -48,6 +40,12 @@ function RecipeDetails() {
         if (verifyData) setInProgress(data.id)
       }
     }
+    const getRecipe = async () => {
+      const response = await allFetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.recipeId}`)
+      const data = response.meals || response.drinks
+      setRecipeDetails(managerRecipes(data[0]))
+    }
+    getRecipe()
     getLocalStorage()
   }, [location])
 

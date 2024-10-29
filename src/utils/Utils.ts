@@ -43,3 +43,8 @@ export const managerLocation = () => {
   const { pathname } = window.location
   return pathname.split("/")[1] === "meals" ? "meals" : "drink";
 }
+
+export const sharing = (recipeId: string) => {
+  navigator.clipboard.writeText(window.location.host + '/meals/' + recipeId)
+  alert('Link copiado!')
+}

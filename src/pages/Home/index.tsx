@@ -43,11 +43,11 @@ function Home() {
     <div className="flex flex-col text-center">
       {/* <h1 className="mb-8">Recipes</h1> */}
       <Categories categories={ categories }/>
-      <ul className="mt-3 flex flex-wrap">
+      <ul className="mt-2 flex flex-wrap justify-evenly">
         {recipes.map((recipe, index) => (
           <Link key={ index } 
           to={ `/${'idMeal' in recipe ? "meals" : 'drinks'}/${'idMeal' in recipe ? recipe['idMeal'] : recipe['idDrink']}` }>
-          <li className="flex flex-col bg-gray-200 justify-center p-4 m-4 size-80 border-solid border-2 border-black rounded-md">
+          <li className="flex flex-col bg-gray-200 justify-center p-4 m-3 size-80 border-solid border-2 border-black rounded-md">
             {/* <RecipeCard recipe={ recipe } /> */}
             <h2 className="mt-3 text-xl text-black">{'strMeal' in recipe ? recipe.strMeal : recipe.strDrink}</h2>
             <img className="size-full p-4 mb-2 rounded-xl" src={'strMeal' in recipe ? recipe.strMealThumb : recipe.strDrinkThumb} alt="" />

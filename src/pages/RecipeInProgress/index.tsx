@@ -6,6 +6,7 @@ import shareIcon from  "../../images/shareIcon.svg"
 import {getStorage, removeStorage, setStorage } from "../../utils/LocalStorage";
 import { Recipe } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
+import { sharing } from "../../utils/Utils";
 
 type Checked = {
   [key: string]: boolean
@@ -60,10 +61,6 @@ function RecipeInProgress() {
     }
   }
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href)
-    alert('Link copiado!')
-  }
 
   const handleDisable =  () => {
     const allIngredients = recipeDetails.ingredients.length;
@@ -113,7 +110,7 @@ function RecipeInProgress() {
       disabled={ handleDisable() }
       >Finalizar receita</button>
       <button onClick={ handleFavorite }><img src={ favoriteHeart } alt="Botão de favorito" /></button>
-      <button  onClick={ handleShare }><img src={shareIcon} alt="" /></button>
+      <button  onClick={ () => sharing(recipeDetails.id) }><img src={shareIcon} alt="Icone para compartilhar receita" /></button>
     </div>
   );
 }
