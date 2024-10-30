@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import { Recipe } from "../../utils/types";
-import { getStorage, removeStorage } from "../../utils/LocalStorage";
+import { getStorage } from "../../utils/LocalStorage";
 import RecipeCard from "../../components/RecipeCard";
 import Navigate from "../../components/Navigate";
 import shareIcon from  "../../images/shareIcon.svg"
+import { unfavorite } from "../../utils/Utils";
 
 function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState<Recipe[]>([]);
 
-  const handleClick = (recipe: Recipe) => {
-    removeStorage('doneRecipes',recipe)
-    window.location.reload()
-  }
 
   const sharing = (recipeId: string) => {
     navigator.clipboard.writeText(window.location.host + '/meals/' + recipeId)
@@ -30,7 +27,7 @@ function DoneRecipes() {
       {doneRecipes.map((recipe) => (
         <div  key={recipe.id}>
           <RecipeCard recipe={recipe} />
-          <button onClick={ () => handleClick(recipe) } >Desfazer</button>
+          <button onClick={ () => unfavorite(recipe,'doneRecipes') } >Desfazer</button>
           <button  onClick={ () => sharing(recipe.id) }><img src={shareIcon} alt="" /></button>
         </div>
       ))}

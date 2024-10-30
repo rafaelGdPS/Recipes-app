@@ -1,3 +1,4 @@
+import { removeStorage } from "./LocalStorage";
 import { drinkRecipe, mealRecipe, Recipe } from "./types";
 
 export const allFetch = async (url: string) => {
@@ -47,4 +48,9 @@ export const managerLocation = () => {
 export const sharing = (recipeId: string) => {
   navigator.clipboard.writeText(window.location.host + '/meals/' + recipeId)
   alert('Link copiado!')
+}
+
+export const unfavorite = (recipe: Recipe, key: string) => {
+  removeStorage(key,recipe)
+  window.location.reload()
 }
