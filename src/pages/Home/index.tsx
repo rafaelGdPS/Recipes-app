@@ -1,32 +1,34 @@
 import { useContext, useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { allFetch } from "../../utils/Utils"
+import { useLocation } from "react-router-dom"
+import { allFetch, managerListRecipes } from "../../utils/Utils"
 import { CategoryObject } from "../../utils/types"
 import Categories from "../../components/Categories/Categories"
 import RecipesContext from "../../context/RecipesContext"
-// import RecipeCard from "../../components/RecipeCard"
+import RecipeCard from "../../components/RecipeCard"
 
-const meal = "meal"
-const drink = "cocktail"
 
 function Home() {
   const { recipes, setAllRecipes, setRecipes } = useContext(RecipesContext)
   const [categories, setCategories] = useState<CategoryObject[]>([])
   const { pathname } = useLocation()
-
-  const recipe = pathname.split("/")[1] === "meals" ? meal : drink
+  const [togle, setTogle] = useState(false)
+  
+  
+  const recipe = pathname.split("/")[1] === "meals" ? "meal" : "drink"
   const url = `https://www.the${recipe}db.com/api/json/v1/1/search.php?s=`
 
 
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchRecipes() {
+      setTogle(true)
       const response = await allFetch(url)
       const data = response.meals || response.drinks
+      const recipesData = managerListRecipes(data).slice(0, 12)
       
-      setAllRecipes(data.slice(0, 12))
-      setRecipes(data.slice(0, 12))
-                 
+      setAllRecipes(recipesData)
+      setRecipes(recipesData)
+      setTogle(false)        
     }
 
     async function fetchCategories() {
@@ -39,20 +41,14 @@ function Home() {
     fetchRecipes()
   }, [recipe, url])
 
-  return (
+  return togle ? <h1>Aguarde alguns instantes, carregando receitas</h1> : (
     <div className="flex flex-col text-center">
-      {/* <h1 className="mb-8">Recipes</h1> */}
       <Categories categories={ categories }/>
       <ul className="mt-2 flex flex-wrap justify-evenly">
         {recipes.map((recipe, index) => (
-          <Link key={ index } 
-          to={ `/${'idMeal' in recipe ? "meals" : 'drinks'}/${'idMeal' in recipe ? recipe['idMeal'] : recipe['idDrink']}` }>
-          <li className="flex flex-col bg-gray-200 justify-center p-4 m-3 size-80 border-solid border-2 border-black rounded-md">
-            {/* <RecipeCard recipe={ recipe } /> */}
-            <h2 className="mt-3 text-xl text-black">{'strMeal' in recipe ? recipe.strMeal : recipe.strDrink}</h2>
-            <img className="size-full p-4 mb-2 rounded-xl" src={'strMeal' in recipe ? recipe.strMealThumb : recipe.strDrinkThumb} alt="" />
+          <li key={ index } className="flex flex-col justify-center p-4 m-3 size-80">
+            <RecipeCard recipe={ recipe } />
           </li>
-          </Link>
         ))}
       </ul>
     </div>

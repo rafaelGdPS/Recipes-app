@@ -51,17 +51,27 @@ function RecipeDetails() {
 
   
   return (
-    <div>
+    <div className=" flex flex-col text-center ">
       <h1>Recipe Details</h1>
-      <p>{ recipe.category }</p>
-      <h2>{ recipe.name }</h2>
-      <img src={ recipe.img } alt={ recipe.name } />
-      <ul>
+      <section className=" flex justify-evenly " >
+        <div className="bg-white rounded-xl p-4 w-3/6 ">
+          <h2>{ recipe.name }</h2>
+          <p>{ recipe.category }</p>
+          <img className=" rounded-2xl " src={ recipe.img } alt={ recipe.name } />
+        </div>
+        <div className="bg-yellow-50 opacity-80 px-20 flex flex-col rounded-xl justify-evenly w-5/12 border-2 border-solid border-black ">
+          <h2 className="text-4xl">Ingredients</h2>
+          <ul >
         { recipe.ingredients.map((ingredient, index) => (
-          <li key={ index }>{ ingredient } - { recipe.measures[index] }</li>
+           <li className=" border-b-black border-b-2 text-xl" key={ index }>{ ingredient } - { recipe.measures[index] }</li>
         )) }
-      </ul>
-      <p>{ recipe.instructions }</p>
+          </ul>
+        <section className=" bg-yellow-200 text-center text-xl  " >
+          <h2>Instruções</h2>
+          <p className="underline" >{ recipe.instructions }</p>
+        </section>
+        </div>
+      </section>
 
       <iframe 
       src={ recipe.youtube && recipe.youtube.replace('watch?v=', 'embed/') }

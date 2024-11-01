@@ -25,6 +25,7 @@ export const managerRecipes = (recipe: mealRecipe | drinkRecipe) : Recipe => {
   const measures = filterkeys(recipe, 'strMeasure');
 
   return {
+    type: 'idMeal' in recipe ? 'meals' : 'drinks',
     id: 'idMeal' in recipe ? recipe.idMeal : recipe.idDrink,
     name: 'strMeal' in recipe ? recipe.strMeal : recipe.strDrink,
     img: 'strMeal' in recipe ? recipe.strMealThumb : recipe.strDrinkThumb,

@@ -5,20 +5,34 @@ import RecipeCard from "../../components/RecipeCard";
 import Navigate from "../../components/Navigate";
 import shareIcon from  "../../images/shareIcon.svg"
 import { sharing, unfavorite } from "../../utils/Utils";
+import BtnFilters from "../../components/Btnfilters";
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(favoriteRecipes);
+
+  const handleFilters = ( type: string ) => {
+  
+    const recipes = favoriteRecipes.filter((recipe) => recipe.type === type.toLowerCase())
+    setFilteredRecipes(recipes)
+  
+}
 
   useEffect(() => {
     const recipes = getStorage('favoriteRecipes')
     setFavoriteRecipes(recipes as Recipe[])
-  })
+    setFilteredRecipes(recipes as Recipe[])
+  }, [])
   return (
     <div>
     <h1>Tela de Favoritos</h1>
     < Navigate />
+    < BtnFilters
+    filters={ handleFilters }
+    withouthFilters={ () => setFilteredRecipes(favoriteRecipes) }
+     />
     <div>
-      {favoriteRecipes.map((recipe) => (
+      {filteredRecipes.map((recipe) => (
         <div>
           <RecipeCard recipe={ recipe } />
           <button onClick={ () => sharing(recipe.id) }> <img src={ shareIcon } alt="Botão de compartilhar" /></button>

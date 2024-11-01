@@ -9,13 +9,13 @@ function Profile() {
     navigate('/')
   }
   return (
-    <div>
-      <h1>Profile</h1>
+    <main>
+      <h1>Perfil do usuario</h1>
       <div>
       < Navigate />
       <button onClick={ handleLogout } >Logout</button>
       </div>
-    </div>
+    </main>
   );
 }
 
